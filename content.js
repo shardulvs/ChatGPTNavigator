@@ -92,6 +92,6 @@ function scrollToBottom() {
     });
 }
 
-document.addEventListener("wheel", (event) => {
+document.addEventListener("wheel", () => {
     delete chat_scroll.current_index
 })
