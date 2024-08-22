@@ -9,12 +9,22 @@ document.addEventListener('keydown', function (event) {
     }
     if (event.target.nodeName === "INPUT" || event.target.nodeName === "TEXTAREA") return;
     if (event.target.isContentEditable) return;
-    if (event.key === 'j' || event.key === 'k') {
-        if (event.key === 'j') {
+    if (event.key === 'j' || event.key === 'k' || event.key === 'u' || event.key === 'i') {
+        if (event.key === 'u') {
             chat_scroll(-1)
         }
-        if (event.key === 'k') {
+        if (event.key === 'i') {
             chat_scroll(+1)
+        }
+        if (event.key === 'j') {
+            document.activeElement.blur()
+            delete chat_scroll.current_index
+            smoothScroll(-20, 90)
+        }
+        if (event.key === 'k') {
+            document.activeElement.blur()
+            delete chat_scroll.current_index
+            smoothScroll(20, 90)
         }
     }
 });
@@ -48,7 +58,9 @@ function chat_scroll(offset) {
             scrollToTargetAdjusted(elements[index])
 
         } else {
-
+            if (offset > 0) {
+                scrollToBottom()
+            }
         }
 
     }
@@ -86,6 +98,7 @@ function scrollToTargetAdjusted(element) {
 }
 
 function scrollToBottom() {
+    document.activeElement.blur()
     const bottom = document.querySelector("#__next > div.relative.flex.h-full.w-full.overflow-hidden.transition-colors.z-0 > div.relative.flex.h-full.max-w-full.flex-1.flex-col.overflow-hidden > main > div.flex.h-full.flex-col.focus-visible\\:outline-0 > div.flex-1.overflow-hidden > div > div > div > div").getBoundingClientRect().bottom
     document.querySelector("#__next > div.relative.flex.h-full.w-full.overflow-hidden.transition-colors.z-0 > div.relative.flex.h-full.max-w-full.flex-1.flex-col.overflow-hidden > main > div.flex.h-full.flex-col.focus-visible\\:outline-0 > div.flex-1.overflow-hidden > div > div > div").scrollBy({
         top: bottom, behavior: "smooth"
@@ -95,3 +108,27 @@ function scrollToBottom() {
 document.addEventListener("wheel", () => {
     delete chat_scroll.current_index
 })
+
+function smoothScroll(scrollDistance, duration) {
+    const scrollable_area = document.querySelector("#__next > div.relative.flex.h-full.w-full.overflow-hidden.transition-colors.z-0 > div.relative.flex.h-full.max-w-full.flex-1.flex-col.overflow-hidden > main > div.flex.h-full.flex-col.focus-visible\\:outline-0 > div.flex-1.overflow-hidden > div > div > div");
+    const startTime = performance.now();
+
+    function scrollStep(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const currentScroll = (scrollDistance * easeInOutQuad(progress));
+        scrollable_area.scrollBy({
+            top: currentScroll,
+            behavior: "instant"
+        })
+        if (elapsed < duration) {
+            requestAnimationFrame(scrollStep);
+        }
+    }
+
+    function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    requestAnimationFrame(scrollStep);
+}

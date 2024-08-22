@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ChatGPT Keyboard Navigation",
   "version": "1.0",
-  "description": "Navigate chat conversations using J and K keys.",
+  "description": "Navigate chat conversations using keyboard.",
   "permissions": [
     "activeTab"
   ],

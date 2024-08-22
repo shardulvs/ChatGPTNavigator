@@ -4,8 +4,10 @@ ChatGPTNavigator is a Chrome extension that allows you to navigate conversations
 
 ## Usage
 
-- **Move Up**: Press `J` to move to the previous chat.
-- **Move Down**: Press `K` to move to the next chat.
+- **Move Up**: Press `U` to move to the previous chat.
+- **Move Down**: Press `I` to move to the next chat.
+- **Move Up**: Press `J` to scroll up.
+- **Move Down**: Press `K` to scroll down.
 - **Toggle Focus**: Press `Escape` to toggle focus from the text area.
 
 ## Installation
@@ -32,4 +34,4 @@ To install and use ChatGPTNavigator, follow these steps:
 
 
 
-This extension is perfect for users who prefer keyboard navigation over mouse interactions, making your ChatGPT experience smoother and more efficient.
+This extension is perfect for users who prefer keyboard navigation over mouse interactions.
